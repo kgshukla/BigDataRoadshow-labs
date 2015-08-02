@@ -94,7 +94,17 @@ On the XD shell window, type:
 xd:> stream create stream1 --definition "time | log" --deploy
 Created and deployed new stream 'stream1'
 ----
-Check the logs on the window where you started __xd-singlenode__. It should be outputing time ticks. +
+Check the logs on the window where you started __xd-singlenode__. It should be outputing time ticks like this. +
+[source,bash]
+----
+2015-08-02 00:38:26,786 1.1.2.RELEASE  INFO task-scheduler-1 sink.stream1 - 2015-08-02 00:38:26
+2015-08-02 00:38:27,788 1.1.2.RELEASE  INFO task-scheduler-2 sink.stream1 - 2015-08-02 00:38:27
+2015-08-02 00:38:28,790 1.1.2.RELEASE  INFO task-scheduler-1 sink.stream1 - 2015-08-02 00:38:28
+2015-08-02 00:38:29,791 1.1.2.RELEASE  INFO task-scheduler-3 sink.stream1 - 2015-08-02 00:38:29
+2015-08-02 00:38:30,792 1.1.2.RELEASE  INFO task-scheduler-2 sink.stream1 - 2015-08-02 00:38:30
+2015-08-02 00:38:31,793 1.1.2.RELEASE  INFO task-scheduler-4 sink.stream1 - 2015-08-02 00:38:31
+----
+
 Now the _stream list_ command should also identify the stream we created and we should be able to destroy it when desired:
 
 [source,bash]
