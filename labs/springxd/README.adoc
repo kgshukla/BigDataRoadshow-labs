@@ -15,17 +15,20 @@ For Mac OSX CoRD is reccommended. CoRD is free to download and can be obtained f
 
 For Windows the included Remote Desktop Connection can be used: http://windows.microsoft.com/en-ca/windows/connect-using-remote-desktop-connection#connect-using-remote-desktop-connection=windows-7
 
-The username and password for the AMI image is gpadmin/bebold.
+
 
 === Starting Spring XD
+Login to your assigned machine using the following
+$ssh -i  <.pem key> ec2-user@<IP-address>
+$sudo su - gpadmin
 
-Start a single node instance of Spring XD, typing on a terminal:
+Start a single node instance of Spring XD as gpadmin user, typing on a terminal:
 
 [source,bash]
 ----
 $ git clone https://github.com/Pivotal-Field-Engineering/BigDataRoadshow-labs /home/gpadmin/Desktop/BigDataRoadshow-labs
 $ export JAVA_OPTS="-XX:PermSize=512m"
-$ xd-singlenode
+$ /opt/pivotal/spring-xd/xd/bin/xd-singlenode
 
  _____                           __   _______
 /  ___|          (-)             \ \ / /  _  \
