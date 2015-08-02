@@ -6,17 +6,9 @@ The purpose of this lab is to get a basic understanding of how a Gemfire cluster
 Required Pivotal Products: +
 - Gemfire 8.1
 
-If you are working with the Amazon Image (AMI:ami-aaf1dac2) a remote desktop client that supports an RDP connection may be required.
-
-For Mac OSX CoRD is reccommended. CoRD is free to download and can be obtained from this site: http://cord.sourceforge.net/
-
-For Windows the included Remote Desktop Connection can be used: http://windows.microsoft.com/en-ca/windows/connect-using-remote-desktop-connection#connect-using-remote-desktop-connection=windows-7
-
-The username and password for the AMI image is gpadmin/bebold.
-
 === Setting up the terminal session
 All instructions assume that the terminal session is started in the labs directory of the roadshow project. +
-Within the terminal execute the following steps: +
+Within the terminal (as ec2-user user) execute the following steps: +
 [source]
 ----
 [pivhdsne:Desktop]$ /home/ec2-user/Desktop/BigDataRoadshow-labs/labs
@@ -94,7 +86,7 @@ Wait for the previous command to finish before preceding to the next step. +
 GemFire Pulse is a Web Application that provides a graphical dashboard for monitoring vital, real-time health and performance of GemFire clusters, members, and regions. +
 With the first locator started, Pulse is now available. +
 To use Pulse, open a browser and enter this URL in the address bar: +
-http://localhost:7575/pulse/Login.html +
+http://<IPADDRESS>:7575/pulse/Login.html +
 
 Alternatively the following command can be typed into gfsh to launch Pulse in the browser: +
 start pulse --url=http://localhost:7575/pulse
@@ -184,7 +176,7 @@ start server --name=serverB --use-cluster-configuration=false --server-port=0 --
 start server --name=serverC --use-cluster-configuration=false --server-port=0 --locators=127.0.0.1[10334],127.0.0.1[10335] --J=-Dgemfire.http-service-port=7579 --J=-Dgemfire.start-dev-rest-api=true --J=-Xms128m --J=-Xmx128m
 start server --name=serverD --use-cluster-configuration=false --server-port=0 --locators=127.0.0.1[10334],127.0.0.1[10335] --J=-Dgemfire.http-service-port=7580 --J=-Dgemfire.start-dev-rest-api=true --J=-Xms128m --J=-Xmx128m
 ----
-To save time these have been bundled up into a single file that can be executed from gfsh. Execute the following command (this will only work if gfsh was started from the labs folder of the workspace): +
+To save time these have been bundled up into a single file that can be executed from gfsh. Execute the following command only if you have not run the above commands to run locators or servers (this will only work if gfsh was started from the labs folder of the workspace): +
 [source]
 ----
 gfsh>run --file=gemfire/start-more-servers.gfsh
@@ -231,7 +223,7 @@ In this lab, to get a better feel for the process, Regions will be created on th
 Add the following command in gfsh:
 [source]
 ----
-create region --name=product --type=REPLICATE
+gfsh>create region --name=product --type=REPLICATE
 ----
 It will procude an output like this following:
 [source]
@@ -256,7 +248,7 @@ image::images/pulse-data-first-region-members.png[]
 Now create a Partitioned Region.
 [source,bash]
 ----
-create region --name=transaction --type=PARTITION --redundant-copies=1
+gfsh>create region --name=transaction --type=PARTITION --redundant-copies=1
 ----
 For an extra bonus, when using the tab key, the options for Partitioned regions may have come up.
 [source]
@@ -293,7 +285,7 @@ For this lab gfsh and the developer REST api will be used.
 Run this command in gfsh to do a simple put:
 [source,bash]
 ----
-put --region=/product --key="123" --value="ABC"
+gfsh>put --region=/product --key="123" --value="ABC"
 ----
 The response will look like this:
 [source,bash]
@@ -310,7 +302,7 @@ Gemfire uses a Object Query Language called OQL to access data. Functions can al
 Run this command in gfsh to select the record inserted in the previous step:
 [source,bash]
 ----
-query --query="select * from /product"
+gfsh>query --query="select * from /product"
 ----
 The results will look like this:
 [source,bash]
@@ -340,13 +332,13 @@ In this step data will be added to the Partitioned Region. +
 To do this a gfsh script will be used. +
 [source,bash]
 ----
-run --file=gemfire/transactions.gfsh
+gfsh>run --file=gemfire/transactions.gfsh
 ----
 Messages will scroll past in gfsh showing all the puts occuring. +
 To get the number of records in the region, type and run this OQL query in gfsh or the data browser of Pulse (the query needs to be typed into the web based data browser - copy paste will not work):
 [source,sql]
 ----
-query --query="select count(*) from /transaction"
+gfsh>query --query="select count(*) from /transaction"
 ----
 The result should be 1000. +
 By clicking the Cluster View -> Data in the navigation bar of Pulse it can be seen that the transaction region is now the largest. +
@@ -360,7 +352,7 @@ Leave this view open for the next step.
 With the data view of Pulse still open bring up the gfsh and enter the following command. Watch the data view in Pulse as this runs. +
 [source]
 ----
-stop server --name=serverB
+gfsh>stop server --name=serverB
 ----
 In a short time the view in pulse will now show the records distributed across three members rather than 4. +
 However, when an OQL query is executed to get the count, we are still at 1000 records even after losing a full member. +
@@ -431,7 +423,7 @@ Now run the rebalance command. +
 == BONUS Inputing Data with the Developer REST API
 Gemfire server processes can host a tomcat server that allows them to receive REST calls to perform operations on the grid. +
 To input some data using this approach, first browse to a web based UI called Swagger that Gemfire includes: +
-http://127.0.0.1:7577/gemfire-api/docs/index.html
+http://<IPADDRESS>:7577/gemfire-api/docs/index.html
 Now click on the region link and then the Post button. Fill out the Parameters as in the form. +
 
 image::images/gemfire-rest-api.png[]
