@@ -9,17 +9,20 @@ Pre-Requisites
 - http://pivotal.io/big-data/pivotal-gemfire[GemFire] v8.1+ installed
 - http://pivotal.io/big-data/pivotal-hd[PHD+Hawq] v2.1+  installed
 
-If you are working with the Amazon Image (AMI:ami-aaf1dac2) a remote desktop client that supports an RDP connection may be required.
+=== Starting Pivotal Hadoop via Ambari
+Follow the instructions on this http://phd-start.cfapps.io/start_phd.pdf[website] to start Pivotal Hadoop. It takes some time to start so make sure you start early.
 
-For Mac OSX CoRD is reccommended. CoRD is free to download and can be obtained from this site: http://cord.sourceforge.net/
-
-For Windows the included Remote Desktop Connection can be used: http://windows.microsoft.com/en-ca/windows/connect-using-remote-desktop-connection#connect-using-remote-desktop-connection=windows-7
-
-
+Ask instructor for IPADDRESS.
 
 === Starting Spring XD
-Login to your assigned machine using the following
+Make sure you stop SpringXD service via Ambari before continuing this lab.
+
+Login to your assigned machine using the following (terminal for mac/linux and putty for windows). Ask instructor for .pem or .ppk file.
+
+[source,bash]
+----
 $ssh -i  <.pem key> ec2-user@<IP-address>
+----
 
 Start a single node instance of Spring XD as gpadmin user, typing on a terminal:
 
@@ -233,17 +236,27 @@ Destroyed all streams
  
 === Applying an additional transformation and sinking into HDFS 
 
-First we need to make sure Pivotal HD is started using the script provided. 
-If you're not sure, just check using _icm_client_
+First we need to make sure Pivotal HD is up and running. You must have already started via Ambari in the first section.
+If you're not sure, just check hadoop command
  +
 [source,bash]
 ----
-$ icm_client list
-Fetching installed clusters
-Installed Clusters:
-Cluster ID: 1	Cluster Name: pivhd	PHD Version: PHD-2.1.0.0	Status: started
+$ hdfs dfs -ls /
+
+Found 11 items
+drwxrwxrwx   - yarn    hadoop           0 2015-05-25 12:13 /app-logs
+drwxr-xr-x   - hdfs    hdfs             0 2015-05-25 12:11 /apps
+drwxrwxrwx   - gpadmin gpadmin          0 2015-05-26 13:21 /hawq_data
+drwxr-xr-x   - mapred  hdfs             0 2015-05-25 12:09 /mapred
+drwxr-xr-x   - hdfs    hdfs             0 2015-05-25 12:09 /mr-history
+drwxr-xr-x   - hdfs    hdfs             0 2015-05-25 12:10 /phd
+drwxrwxrwx   - hdfs    hdfs             0 2015-06-22 01:11 /sample
+drwxr-xr-x   - hdfs    hdfs             0 2015-05-25 12:10 /system
+drwxrwxrwx   - hdfs    hdfs             0 2015-07-06 09:20 /tmp
+drwxr-xr-x   - hdfs    hdfs             0 2015-06-27 11:28 /user
+drwxrwxrwx   - gpadmin hdfs             0 2015-08-02 02:44 /xd
 ----
-In case it's stopped, use the Pivotal HD startup script as linked on the Desktop. 
+In case it's stopped, use Ambari console to start up. 
 
 * Configuring Spring XD for HDFS access
 
@@ -383,14 +396,14 @@ $ gfsh
 Monitor and Manage GemFire
 
 gfsh>start locator --name=locator1 --J=-Dgemfire.http-service-port=7575
-Starting a GemFire Locator in /home/gpadmin/BigDataRoadshow/locator1...
+Starting a GemFire Locator in /home/ec2-user/BigDataRoadshow/locator1...
 -
-Locator in /home/gpadmin/BigDataRoadshow/locator1 on ip-172-31-18-42.ec2.internal[10334] as locator1 is currently online.
+Locator in /home/ec2-user/BigDataRoadshow/locator1 on ip-172-31-18-42.ec2.internal[10334] as locator1 is currently online.
 Process ID: 46044
 Uptime: 16 seconds
 GemFire Version: 8.1.0
 Java Version: 1.7.0_45
-Log File: /home/gpadmin/BigDataRoadshow/locator1/locator1.log
+Log File: /home/ec2-user/BigDataRoadshow/locator1/locator1.log
 JVM Arguments: -Dgemfire.enable-cluster-configuration=true -Dgemfire.load-cluster-configuration-from-dir=false -Dgemfire.http-service-port=7575 -Dgemfire.launcher.registerSignalHandlers=true -Djava.awt.headless=true -Dsun.rmi.dgc.server.gcInterval=9223372036854775806
 Class-Path: /opt/pivotal/gemfire/Pivotal_GemFire_810/lib/gemfire.jar:/opt/pivotal/gemfire/Pivotal_GemFire_810/lib/locator-dependencies.jar
 
@@ -405,12 +418,12 @@ Cluster configuration service is up and running.
 gfsh>start server --name=server1 --J=-Dgemfire.start-dev-rest-api=true --J=-Dgemfire.http-service-port=7676
 Starting a GemFire Server in /home/gpadmin/Desktop/server1...
 .............
-Server in /home/gpadmin/Desktop/server1 on ip-172-31-44-219.ec2.internal[40404] as server1 is currently online.
+Server in /home/ec2-user/Desktop/server1 on ip-172-31-44-219.ec2.internal[40404] as server1 is currently online.
 Process ID: 16646
 Uptime: 6 seconds
 GemFire Version: 8.1.0
 Java Version: 1.7.0_45
-Log File: /home/gpadmin/Desktop/server1/server1.log
+Log File: /home/ec2-user/Desktop/server1/server1.log
 JVM Arguments: -Dgemfire.default.locators=172.31.44.219[10334] -Dgemfire.use-cluster-configuration=true -Dgemfire.start-dev-rest-api=true -Dgemfire.http-service-port=7676 -XX:OnOutOfMemoryError=kill -KILL %p -Dgemfire.launcher.registerSignalHandlers=true -Djava.awt.headless=true -Dsun.rmi.dgc.server.gcInterval=9223372036854775806
 Class-Path: /opt/pivotal/gemfire/Pivotal_GemFire_810/lib/gemfire.jar:/opt/pivotal/gemfire/Pivotal_GemFire_810/lib/server-dependencies.jar
 ----
