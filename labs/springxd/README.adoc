@@ -131,7 +131,7 @@ xd:>stream create streamTimeFile --definition "time | file --name=mystream --dir
 Created and deployed new stream 'streamTimeFile'
 ----
 
-Check the log file on a terminal window and see the time is now being output there: +
+Check the log file on a new ssh terminal window and see the time is now being output there: +
  +
 [source,bash]
 ----
