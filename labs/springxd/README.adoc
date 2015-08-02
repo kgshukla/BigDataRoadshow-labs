@@ -25,7 +25,7 @@ Start a single node instance of Spring XD as gpadmin user, typing on a terminal:
 
 [source,bash]
 ----
-$ git clone https://github.com/Pivotal-Field-Engineering/BigDataRoadshow-labs /home/ec2-user/Desktop/BigDataRoadshow-labs
+$ git clone https://github.com/kgshukla/BigDataRoadshow-labs /home/ec2-user/Desktop/BigDataRoadshow-labs
 $ export JAVA_OPTS="-XX:PermSize=512m"
 $ /opt/pivotal/spring-xd-1.1.2/xd/bin/xd-singlenode
 
