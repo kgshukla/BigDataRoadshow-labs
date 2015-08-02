@@ -20,14 +20,10 @@ So far this consists of:
 
 * this README
 * link:labs/springxd[Data Streaming with Spring XD, GemFire and PHD]
-* link:labs/gemfire[GemFire Overview Lab] 
 * link:labs/phd-hawq[PHD and Hawq Overview Lab]
+* link:labs/gemfire[GemFire Overview Lab (optional)]  
 
 == Environment
 
 The labs are built for running on any environment with the right products installed.  
-In order to make it simpler, we've created the Amazon public AMI *ami-c42301ac* (gpadmin/bebold) . 
-
-
-This AMI can be used to provision new instances that are ready to run those labs. Make sure you get 16Gb of memory for your AMI (recommended EC2 instance type: m3.xlarge) 
- 
+In order to make it simpler, we've created the Amazon AMI to launch instances quickly. Please ask your administrator for the .pem (mac users) or .ppk (windows users) file to login into the AMI
