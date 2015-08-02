@@ -19,8 +19,7 @@ All instructions assume that the terminal session is started in the labs directo
 Within the terminal execute the following steps: +
 [source]
 ----
-[pivhdsne:Desktop]$ cd BigDataRoadshow
-[pivhdsne:BigDataRoadshow]$ cd labs/
+[pivhdsne:Desktop]$ /home/ec2-user/Desktop/BigDataRoadshow-labs/labs
 [pivhdsne:labs]$ ls
 gemfire  phd-hawq  preparing_labs.pdf  springxd
 [pivhdsne:labs]$
@@ -28,7 +27,7 @@ gemfire  phd-hawq  preparing_labs.pdf  springxd
 
 === Open up the labs instructions
 Ensure the lab instructions are open in a browser window: +
-https://github.com/Pivotal-Field-Engineering/BigDataRoadshow-labs/blob/master/labs/gemfire/README.adoc +
+https://github.com/kgshukla/BigDataRoadshow-labs/blob/master/labs/gemfire/README.adoc +
 
 
 == Exploring gfsh
