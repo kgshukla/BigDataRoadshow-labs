@@ -20,7 +20,6 @@ For Windows the included Remote Desktop Connection can be used: http://windows.m
 === Starting Spring XD
 Login to your assigned machine using the following
 $ssh -i  <.pem key> ec2-user@<IP-address>
-$sudo su - gpadmin
 
 Start a single node instance of Spring XD as gpadmin user, typing on a terminal:
 
@@ -28,7 +27,7 @@ Start a single node instance of Spring XD as gpadmin user, typing on a terminal:
 ----
 $ git clone https://github.com/Pivotal-Field-Engineering/BigDataRoadshow-labs /home/gpadmin/Desktop/BigDataRoadshow-labs
 $ export JAVA_OPTS="-XX:PermSize=512m"
-$ /opt/pivotal/spring-xd/xd/bin/xd-singlenode
+$ /opt/pivotal/spring-xd-1.1.2/xd/bin/xd-singlenode
 
  _____                           __   _______
 /  ___|          (-)             \ \ / /  _  \
@@ -48,8 +47,8 @@ Started : SingleNodeApplication
 1.1.0.RELEASE  INFO DeploymentSupervisor-0 server.ContainerListener - Container arrived: Container{name='9b736207-17df-4ba8-bfb7-8f68a14ab466', attributes={ip=192.168.1.2, host=Fredericos-Air, groups=, pid=9011, id=9b736207-17df-4ba8-bfb7-8f68a14ab466}}
 1.1.0.RELEASE  INFO DeploymentSupervisor-0 server.ContainerListener - Scheduling deployments to new container(s) in 15000 ms
 ----
-Wait for the server startup to be complete, it will take a few seconds. +
-Once the server is up and running, let's connect to it from the XD Shell:
+Wait for the server startup to be complete, it will take a few seconds. Remember that the command will not end and you need to open another terminal for other operations +
+Once the server is up and running, let's connect to it from the XD Shell (from another ssh terminal):
 
 [source,bash]
 ----
