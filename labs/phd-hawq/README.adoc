@@ -7,36 +7,18 @@ Requirements
 
 - PHD+HAWQ SingleNode installation ( available at network.pivotal.io )
 
-If you are working with the Amazon Image (AMI:ami-c42301ac) a remote desktop client that supports an RDP connection may be required. +
-
-For Mac OSX CoRD is reccommended. CoRD is free to download and can be obtained from this site: http://cord.sourceforge.net/
-
-For Windows the included Remote Desktop Connection can be used: http://windows.microsoft.com/en-ca/windows/connect-using-remote-desktop-connection#connect-using-remote-desktop-connection=windows-7
-
-The username and password for the AMI image is gpadmin/bebold.
+If you are working with the Amazon Image, you need to start PHD cluster using Ambari console at http://<IP>:8080 user password is admin/pivotal +
 
 === Starting PHD & HAWQ
 
-as gpadmin
-
-from the desktop click start_all.sh
-
-or 
-
-from command line run
-bash ~/Desktop/start_all.sh
-
-Wait for the cluster start process to finish
-Once the cluster is up and running you should be able to query hdfs via the command line
-
-=== Cleaning up HDFS
-
-To make sure system is clean in order to walk through the excersices run
-./pre_clean.sh
+Use Ambari console to start up PHD.
 
 === Accessing Hadoop (HDFS)
 
-open a terminal become gpadmin user 
+open a terminal and login using .pem key
+$ssh -l <.pem key> ec2-user@<IPADDRESS>
+
+become gpadmin user 
 
 $sudo su - gpadmin
 
@@ -46,13 +28,13 @@ $git clone https://github.com/kgshukla/BigDataRoadshow-labs /home/gpadmin/Deskto
 
 $hdfs dfs -ls /
 
-for the labs we need to create a diretory to put data, check if it already exisits
+for the labs we need to create a diretory to put data, check if it already exists
 
 $hdfs dfs -ls /user/sample
 
-if it exists, then no need to create directory again. Go to "Using HAWQ" sub section.
+if it exists, then run "$hdfs dfs -rm /user/sample/sample.csv" to delete the file.
 
-$hdfs dfs -mkdir /user/sample
+if it does not exists, then run "$hdfs dfs -mkdir /user/sample"
 
 verify that the directory was created
 
@@ -60,7 +42,7 @@ $hdfs dfs -ls /user/
 
 === Loading data into HDFS
 
-$cd /home/gpadmin/Labs/PHDHAWQ/
+$cd /home/gpadmin/Desktop/BigDataRoadshow-labs/labs/phd-hawq
 
 $ls -l
 
