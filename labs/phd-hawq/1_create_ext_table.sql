@@ -131,6 +131,6 @@ create external table stage.car_sample_data_ext (
  gpsSpeed numeric,
  gpsAccuracy numeric
  )
-LOCATION ('pxf://pivhdsne.localdomain:50070/user/sample/sample.csv?profile=HdfsTextSimple')
+LOCATION ('pxf://localhost:50070/user/sample/sample.csv?profile=HdfsTextSimple')
 FORMAT 'CSV' (HEADER)
 LOG ERRORS INTO stage.sample_err SEGMENT REJECT LIMIT 10;
