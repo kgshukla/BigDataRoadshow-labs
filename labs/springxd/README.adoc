@@ -25,7 +25,7 @@ Start a single node instance of Spring XD as gpadmin user, typing on a terminal:
 
 [source,bash]
 ----
-$ git clone https://github.com/Pivotal-Field-Engineering/BigDataRoadshow-labs /home/gpadmin/Desktop/BigDataRoadshow-labs
+$ git clone https://github.com/Pivotal-Field-Engineering/BigDataRoadshow-labs /home/ec2-user/Desktop/BigDataRoadshow-labs
 $ export JAVA_OPTS="-XX:PermSize=512m"
 $ /opt/pivotal/spring-xd-1.1.2/xd/bin/xd-singlenode
 
@@ -280,17 +280,17 @@ Let's modify the previous stream to output to HDFS instead. We could just output
 Create the file _transform.groovy_ in your lab directory.
 [source,bash]
 ----
-cd /home/gpadmin/Desktop/BigDataRoadshow-labs/labs
+cd /home/ec2-user/Desktop/BigDataRoadshow-labs/labs
 ----
 The file can be created with the following command: +
 [source,groovy]
 ----
 touch transform.groovy
 ----
-Next open the file for editing in gedit with the following command in the terminal. +
+Next open the file for editing in vi with the following command in the terminal. +
 [source,groovy]
 ----
-gedit transform.groovy
+vi transform.groovy
 ----
 Finally paste the groovy script below into the file. Ensure to click the Save icon before closing gedit. +
 [source,groovy]
@@ -305,10 +305,10 @@ From the XD shell window, type (make sure you have the right path for the _trans
  +
 [source,bash]
 ----
-xd:>stream create transformToHDFS --definition "http --port=9020 | splitter --expression=#jsonPath(payload,'$.Values') | filter --expression=#jsonPath(payload,'$.Y').equals(0) | transform --script='file:/home/gpadmin/Desktop/BigDataRoadshow-labs/labs/transform.groovy'| hdfs --directory=/xd --fileName=output " --deploy
+xd:>stream create transformToHDFS --definition "http --port=9020 | splitter --expression=#jsonPath(payload,'$.Values') | filter --expression=#jsonPath(payload,'$.Y').equals(0) | transform --script='file:/home/ec2-user/Desktop/BigDataRoadshow-labs/labs/transform.groovy'| hdfs --directory=/xd --fileName=output " --deploy
 Created and deployed new stream 'transformToHDFS'
 ----
-Now send some data in...
+Wait for deployment to complete in xd-singlenode terminal. After completion, send some data in...
  +
 [source,bash]
 ----
@@ -369,7 +369,7 @@ Deployed stream 'transformToHDFS'
 
 Now we will start a small Gemfire cluster on this machine, starting with the Locator process. We will cover Gemfire locators and servers in another lab.
 
-- Start the GemFire locator
+- Start the GemFire locator in a new shell terminal as ec2-user user
 
 [source,bash]
 ----
@@ -434,7 +434,7 @@ xd:>stream create gemfireTap --definition "tap:stream:transformToHDFS.filter > o
 Created and deployed new stream 'gemfireTap'
 ----
 
-Let's send some data to our original stream again.
+Wait for deployment to complete in xd-singlenode terminal. After completion, send some data to our original stream again.
 
 [source,bash]
 ----
@@ -460,7 +460,7 @@ Region | size | 1
 ----
 
 As we can see, there's one value in, which we can easily verify using the GemFire's REST API:
-link:http://localhost:7676/gemfire-api/v1/ValuesFromXD[http://localhost:7676/gemfire-api/v1/ValuesFromXD]
+link:http://<IP-ADDRESS>:7676/gemfire-api/v1/ValuesFromXD[http://<IP-ADDRESS>:7676/gemfire-api/v1/ValuesFromXD]
 
 ----
 {
@@ -472,7 +472,7 @@ link:http://localhost:7676/gemfire-api/v1/ValuesFromXD[http://localhost:7676/gem
   } ]
 }
 ----
-Before moving on to HAWQ, lets shut down Gemfire.
+Before moving on to HAWQ, lets shut down Gemfire. Type following in gfsh terminal.
 
 ----
 gfsh>shutdown --include-locators=true
@@ -486,10 +486,11 @@ No longer connected to ip-172-31-44-219.ec2.internal[1099].
 === Quering from HAWQ
 
 We will now create a table that can query the data that is being written to HDFS. +
-Open a terminal session and type in the command:
+Open a new terminal session and type in the command:
 [source, bash]
 ----
-psql
+$sudo su - gpadmin
+$psql
 ----
 
 With in the psql terminal session, paste the follwing SQL. +
@@ -501,19 +502,22 @@ CREATE EXTERNAL TABLE test (
   Z int,
   key int )
 LOCATION
-('pxf://pivhdsne.localdomain:50070/xd/output-*.txt?profile=HdfsTextSimple')
+('pxf://localhost:50070/xd/output-*.txt?profile=HdfsTextSimple')
 FORMAT 'CSV'
 LOG ERRORS INTO test_err SEGMENT REJECT LIMIT 10;
 
 
-Now execute the following query
+Now execute the following query 
 
-psql -c 'select * from test'
+gpadmin=# select * from test;
 
  x | y | z | key 
 ---+---+---+-----
  1 | 0 | 0 |   1
 (1 row)
+
+Exit the prompt by typing \q-
+gpadmin=# \q
 
 ----
 
