@@ -107,7 +107,7 @@ $psql -f 4_rpm_bands.sql
 
 ==== Pivoral Hadoop Administration, Configuration and Management
 
-Pivotal Hadoop is monitored and managed by Ambari. You have already learned how to start PHD using Ambari in previous lab. Now you focus on following
+Pivotal Hadoop is monitored and managed by Ambari. Ambari is used to install services like Pivotal Hadoop, Zookeeper, Yarn, HAWQ, Hive, HBase, Knox, Ranger etc from a single console. In this section, you would learn how to use Ambari UI and perform few task as mentioned below.
 
 1. administration, configuration management
 2. service addition (like HBASE, Zookeeper) via UI.
