@@ -7,10 +7,9 @@ Requirements
 
 - PHD+HAWQ SingleNode installation ( available at network.pivotal.io )
 
-If you are working with the Amazon Image, you need to start PHD cluster using Ambari console at http://<IP>:8080 user password is admin/pivotal +
-
 === Starting PHD & HAWQ
 
+If you have already completed SpringXD lab, then your PHD/HawQ is already running. Proceed to next section.
 Follow this http://phd-start.cfapps.io/start_phd.pdf[link] to start PHD via Ambari
 
 === Accessing Hadoop (HDFS)
