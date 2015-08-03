@@ -6,7 +6,7 @@ The purpose of this lab is to get a basic understanding of how a Gemfire cluster
 Required Pivotal Products: +
 - Gemfire 8.1
 
-=== Setting up the terminal session
+=== Setting up the terminal sessiontr
 All instructions assume that the terminal session is started in the labs directory of the roadshow project. +
 Within the terminal (as ec2-user user) execute the following steps: +
 [source]
@@ -425,7 +425,7 @@ image::images/gemfire-rest-api.png[]
 
 Click the Try It Out button. The response code will be displayed below. +
 
-image::images/gemfire-rest-api-sol.png[]
+image::images/gemfire-rest-api-response.png[]
 
 **This concludes the Lab. Thank you for your attention**
 
