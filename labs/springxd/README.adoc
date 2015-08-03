@@ -334,10 +334,8 @@ Now let's check the HDFS to see if we have the right data output:
 [source,bash]
 ----
 xd:>hadoop fs ls /xd
-Found 3 items
-drwxrwxrwx   - root    hadoop          0 2015-03-04 14:49 /xd/connected-car
+Found 1 items
 -rw-r--r--   3 gpadmin hadoop          0 2015-03-22 03:47 /xd/output-0.txt.tmp
-drwxrwxrwx   - gpadmin hadoop          0 2015-03-17 08:10 /xd/s1
 ----
 
 While the file is being written to it will have the tmp suffix. When the data written exceeds the rollover size (default 1GB) it will be renamed to remove the tmp suffix. 
