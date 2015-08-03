@@ -10,12 +10,14 @@ Pre-Requisites
 - http://pivotal.io/big-data/pivotal-hd[PHD+Hawq] v2.1+  installed
 
 === Starting Pivotal Hadoop via Ambari
-Follow the instructions on this http://phd-start.cfapps.io/start_phd.pdf[website] to start Pivotal Hadoop. It takes some time to start so make sure you start early.
+You may want to skip this section as your instructor have already started Pivotal hadoop and other services for you. 
+
+If you want to learn how to do it your self, follow the instructions on this http://phd-start.cfapps.io/start_phd.pdf[website] to start Pivotal Hadoop.
 
 Ask instructor for IPADDRESS.
 
 === Starting Spring XD
-Make sure you stop SpringXD service via Ambari before continuing this lab.
+Make sure you stop SpringXD service via Ambari before continuing this lab. Your instructor must have already stopped SpringXD services.
 
 Login to your assigned machine using the following (terminal for mac/linux and putty for windows). Ask instructor for .pem or .ppk file.
 
