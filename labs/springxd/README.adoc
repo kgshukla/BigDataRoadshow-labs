@@ -471,7 +471,7 @@ Region | size | 1
 ----
 
 As we can see, there's one value in, which we can easily verify using the GemFire's REST API:
-link:http://<IP-ADDRESS>:7676/gemfire-api/v1/ValuesFromXD[http://<IP-ADDRESS>:7676/gemfire-api/v1/ValuesFromXD]
+link:http://<IP-ADDRESS>:7676/gemfire-api/v1/ValuesFromXD[http://<IP-ADDRESS>:7676/gemfire-api/v1/ValuesFromXD] (It may not work out of the box for Internet explorer to show json output and start downloading some plugin. It works fine on Firefox or Chrome)
 
 ----
 {
