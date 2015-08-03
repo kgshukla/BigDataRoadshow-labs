@@ -28,17 +28,9 @@ $git clone https://github.com/kgshukla/BigDataRoadshow-labs /home/gpadmin/Deskto
 
 $hdfs dfs -ls /
 
-for the labs we need to create a diretory to put data, check if it already exists
+for the labs we need to delete a file. run the following commmand
 
-$hdfs dfs -ls /user/sample
-
-if it exists, then run "$hdfs dfs -rm /user/sample/sample.csv" to delete the file.
-
-if it does not exists, then run "$hdfs dfs -mkdir /user/sample"
-
-verify that the directory was created
-
-$hdfs dfs -ls /user/
+$hdfs dfs -rm /user/sample/sample.csv
 
 === Loading data into HDFS
 
