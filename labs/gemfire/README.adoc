@@ -17,11 +17,6 @@ gemfire  phd-hawq  preparing_labs.pdf  springxd
 [pivhdsne:labs]$
 ----
 
-=== Open up the labs instructions
-Ensure the lab instructions are open in a browser window: +
-https://github.com/kgshukla/BigDataRoadshow-labs/blob/master/labs/gemfire/README.adoc +
-
-
 == Exploring gfsh
 gfsh (Gemfire shell) is a interactive command line interface that allows you to, manage, moniter and administrate Gemfire processes. +
 Through out this lab gfsh will be used to start and stop processes and also to initiate other commands to the cluster. +
