@@ -31,10 +31,15 @@ $mkdir -p /home/gpadmin/Desktop/BigDataRoadshow-labs/labs/phd-hawq
 $cd /home/gpadmin/Desktop/BigDataRoadshow-labs/labs/phd-hawq
 
 $wget --no-check-certificate  https://raw.githubusercontent.com/kgshukla/BigDataRoadshow-labs/master/labs/phd-hawq/1_create_ext_table.sql
+
 $wget --no-check-certificate  https://raw.githubusercontent.com/kgshukla/BigDataRoadshow-labs/master/labs/phd-hawq/2_create_hawq_table.sql
+
 $wget --no-check-certificate  https://raw.githubusercontent.com/kgshukla/BigDataRoadshow-labs/master/labs/phd-hawq/3_load_hawq_table.sql
+
 $wget --no-check-certificate  https://raw.githubusercontent.com/kgshukla/BigDataRoadshow-labs/master/labs/phd-hawq/4_rpm_bands.sql
+
 $wget --no-check-certificate  https://raw.githubusercontent.com/kgshukla/BigDataRoadshow-labs/master/labs/phd-hawq/pre_clean.sh
+
 $wget --no-check-certificate  https://raw.githubusercontent.com/kgshukla/BigDataRoadshow-labs/master/labs/phd-hawq/sample.csv
 
 $ls -l
@@ -113,5 +118,5 @@ Pivotal Hadoop is monitored and managed by Ambari. Ambari is used to install ser
 1. administration, configuration management
 2. service addition (like HBASE, Zookeeper) via UI.
 
-Follow this http://phd-admin.cfapps.io/phd_administration.pdf[link] for the lab
+Follow this link:phd_administration.pdf[link] for the lab
 
