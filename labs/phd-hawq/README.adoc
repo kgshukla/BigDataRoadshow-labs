@@ -9,36 +9,37 @@ Requirements
 
 === Starting PHD & HAWQ
 
-If you have already completed SpringXD lab, then your PHD/HawQ is already running. Proceed to next section.
+If you have already completed SpringXD lab, then your PHD/HawQ is already running. Otherwise go to SpringXD lab and see the section on starting up PHD via Ambari. Proceed to next section.
 
 If you want to look at the status of PHD/HAWQ in Ambari, then login at http://IPADDRESS:8080  (user/passwd is admin/pivotal)
 
 === Accessing Hadoop (HDFS)
 
-open a terminal and login using .pem key
-$ssh -l <.pem key> ec2-user@<IPADDRESS>
-
-become gpadmin user 
-
-$sudo su - gpadmin
+open a terminal and login using gpadmin/changeme credentials
+$ssh gpadmin@<EC2 IPADDRESS>
 
 from the command line run
 
-$git clone https://github.com/kgshukla/BigDataRoadshow-labs /home/gpadmin/Desktop/BigDataRoadshow-labs
-
 $hdfs dfs -ls /
 
-for the labs we need to delete a file. run the following commmand
-
-$hdfs dfs -rm /user/sample/sample.csv
+$hdfs dfs -mkdir /user/sample
 
 === Loading data into HDFS
 
+$mkdir -p /home/gpadmin/Desktop/BigDataRoadshow-labs/labs/phd-hawq
+
 $cd /home/gpadmin/Desktop/BigDataRoadshow-labs/labs/phd-hawq
+
+$wget --no-check-certificate  https://raw.githubusercontent.com/kgshukla/BigDataRoadshow-labs/master/labs/phd-hawq/1_create_ext_table.sql
+$wget --no-check-certificate  https://raw.githubusercontent.com/kgshukla/BigDataRoadshow-labs/master/labs/phd-hawq/2_create_hawq_table.sql
+$wget --no-check-certificate  https://raw.githubusercontent.com/kgshukla/BigDataRoadshow-labs/master/labs/phd-hawq/3_load_hawq_table.sql
+$wget --no-check-certificate  https://raw.githubusercontent.com/kgshukla/BigDataRoadshow-labs/master/labs/phd-hawq/4_rpm_bands.sql
+$wget --no-check-certificate  https://raw.githubusercontent.com/kgshukla/BigDataRoadshow-labs/master/labs/phd-hawq/pre_clean.sh
+$wget --no-check-certificate  https://raw.githubusercontent.com/kgshukla/BigDataRoadshow-labs/master/labs/phd-hawq/sample.csv
 
 $ls -l
 
-you should a set of sql scripts and a sample.csv data file
+you should see total of 6 files.
 
 now put a copy of the file into HDFS
 
