@@ -163,7 +163,7 @@ Just in case httpd is not running, become root (passwd is changeme) and run "$se
 
 * Start Pivotal Hadoop 
 
-Login to http://IPAdress:8080 (user/passwd - admin/admin) and follow this guide to start PHD and HAWQ.
+Login to http://IPAdress:8080 (user/passwd - admin/admin) and follow this link:../springxd/start_phd.pdf[guide] to start PHD and HAWQ.
 
 
 * Create Streams
