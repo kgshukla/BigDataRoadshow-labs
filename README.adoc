@@ -13,4 +13,16 @@ So far this consists of:
 The labs are built for running on any environment with the right products installed.  
 In order to make it simpler, we've created the Amazon AMI to launch instances quickly. There is no .pem requirement to login in to the EC2 instance once AMI is launced.
 
-<TODO - AMI reference>
+Log in to your AWS account and search for AMI ID - ami-b4a7a9e6 (available in Singapore region). 
+
+- Launch it and make sure you choose m4.xlarge instance size. 
+
+- Auto assign a public IP address
+
+- Add 25 GB SSD storage 
+
+- Keep all traffic open on all ports in your security group settings 
+
+- No need to choose a key pair.
+
+Once launched, you could ssh to machine using gpadmin/changeme credentials.
