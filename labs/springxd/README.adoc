@@ -30,7 +30,7 @@ Start a single node instance of Spring XD as gpadmin user, typing on a terminal:
 
 [source,bash]
 ----
-$ git clone https://github.com/kgshukla/BigDataRoadshow-labs /home/gpadmin/Desktop/BigDataRoadshow-labs
+$ mkdir -p /home/gpadmin/Desktop/BigDataRoadshow-labs/labs
 $ export JAVA_OPTS="-XX:PermSize=512m"
 $ $XD_HOME/bin/xd-singlenode
 
@@ -499,10 +499,9 @@ No longer connected to ip-172-31-44-219.ec2.internal[1099].
 === Quering from HAWQ
 
 We will now create a table that can query the data that is being written to HDFS. +
-Open a new terminal session and type in the command:
+Open a new terminal session and type in the command as 'gpadmin' user:
 [source, bash]
 ----
-$sudo su - gpadmin
 $psql
 ----
 
