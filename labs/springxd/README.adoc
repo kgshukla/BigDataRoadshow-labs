@@ -5,34 +5,35 @@ For lab and demo purposes, we'll be using a single node system, although Spring 
 
 Pre-Requisites
 
-- http://projects.spring.io/spring-xd/[Spring XD] v1.1.0+ installed 
+- http://projects.spring.io/spring-xd/[Spring XD] v1.2.1+ installed 
 - http://pivotal.io/big-data/pivotal-gemfire[GemFire] v8.1+ installed
-- http://pivotal.io/big-data/pivotal-hd[PHD+Hawq] v2.1+  installed
+- http://pivotal.io/big-data/pivotal-hd[PHD+Hawq] v3.0+  installed
 
 === Starting Pivotal Hadoop via Ambari
 You may want to skip this section as your instructor have already started Pivotal hadoop and other services for you. 
 
 If you want to learn how to do it your self, follow the instructions on this http://phd-start.cfapps.io/start_phd.pdf[website] to start Pivotal Hadoop.
 
-Ask instructor for IPADDRESS.
+Ask instructor for EC2 IPADDRESS.
 
 === Starting Spring XD
-Make sure you stop SpringXD service via Ambari before continuing this lab. Your instructor must have already stopped SpringXD services.
 
-Login to your assigned machine using the following (terminal for mac/linux and putty for windows). Ask instructor for .pem or .ppk file.
+Login to your assigned machine using the following (terminal for mac/linux and putty for windows).
+
+login/passwd is gpadmin/changeme
 
 [source,bash]
 ----
-$ssh -i  <.pem key> ec2-user@<IP-address>
+$ssh gpadmin@<IP-address>
 ----
 
 Start a single node instance of Spring XD as gpadmin user, typing on a terminal:
 
 [source,bash]
 ----
-$ git clone https://github.com/kgshukla/BigDataRoadshow-labs /home/ec2-user/Desktop/BigDataRoadshow-labs
+$ git clone https://github.com/kgshukla/BigDataRoadshow-labs /home/gpadmin/Desktop/BigDataRoadshow-labs
 $ export JAVA_OPTS="-XX:PermSize=512m"
-$ /opt/pivotal/spring-xd-1.1.2/xd/bin/xd-singlenode
+$ $XD_HOME/bin/xd-singlenode
 
  _____                           __   _______
 /  ___|          (-)             \ \ / /  _  \
@@ -57,7 +58,7 @@ Once the server is up and running, let's connect to it from the XD Shell (from a
 
 [source,bash]
 ----
-$ xd-shell
+$ $XD_SHELL/bin/xd-shell
 
  _____                           __   _______
 /  ___|          (-)             \ \ / /  _  \
@@ -295,7 +296,7 @@ Let's modify the previous stream to output to HDFS instead. We could just output
 Create the file _transform.groovy_ in your lab directory.
 [source,bash]
 ----
-cd /home/ec2-user/Desktop/BigDataRoadshow-labs/labs
+cd /home/gpadmin/Desktop/BigDataRoadshow-labs/labs
 ----
 The file can be created with the following command: +
 [source,groovy]
@@ -320,7 +321,7 @@ From the XD shell window, type (make sure you have the right path for the _trans
  +
 [source,bash]
 ----
-xd:>stream create transformToHDFS --definition "http --port=9020 | splitter --expression=#jsonPath(payload,'$.Values') | filter --expression=#jsonPath(payload,'$.Y').equals(0) | transform --script='file:/home/ec2-user/Desktop/BigDataRoadshow-labs/labs/transform.groovy'| hdfs --directory=/xd --fileName=output " --deploy
+xd:>stream create transformToHDFS --definition "http --port=9020 | splitter --expression=#jsonPath(payload,'$.Values') | filter --expression=#jsonPath(payload,'$.Y').equals(0) | transform --script='file:/home/gpadmin/Desktop/BigDataRoadshow-labs/labs/transform.groovy'| hdfs --directory=/xd --fileName=output " --deploy
 Created and deployed new stream 'transformToHDFS'
 ----
 Wait for deployment to complete in xd-singlenode terminal. After completion, send some data in...
@@ -382,7 +383,7 @@ Deployed stream 'transformToHDFS'
 
 Now we will start a small Gemfire cluster on this machine, starting with the Locator process. We will cover Gemfire locators and servers in another lab.
 
-- Start the GemFire locator in a new shell terminal as ec2-user user
+- Start the GemFire locator in a new shell terminal as gpadmin user
 
 [source,bash]
 ----
@@ -396,14 +397,14 @@ $ gfsh
 Monitor and Manage GemFire
 
 gfsh>start locator --name=locator1 --J=-Dgemfire.http-service-port=7575
-Starting a GemFire Locator in /home/ec2-user/BigDataRoadshow/locator1...
+Starting a GemFire Locator in /home/gpadmin/BigDataRoadshow/locator1...
 -
-Locator in /home/ec2-user/BigDataRoadshow/locator1 on ip-172-31-18-42.ec2.internal[10334] as locator1 is currently online.
+Locator in /home/gpadmin/BigDataRoadshow/locator1 on ip-172-31-18-42.ec2.internal[10334] as locator1 is currently online.
 Process ID: 46044
 Uptime: 16 seconds
 GemFire Version: 8.1.0
 Java Version: 1.7.0_45
-Log File: /home/ec2-user/BigDataRoadshow/locator1/locator1.log
+Log File: /home/gpadmin/BigDataRoadshow/locator1/locator1.log
 JVM Arguments: -Dgemfire.enable-cluster-configuration=true -Dgemfire.load-cluster-configuration-from-dir=false -Dgemfire.http-service-port=7575 -Dgemfire.launcher.registerSignalHandlers=true -Djava.awt.headless=true -Dsun.rmi.dgc.server.gcInterval=9223372036854775806
 Class-Path: /opt/pivotal/gemfire/Pivotal_GemFire_810/lib/gemfire.jar:/opt/pivotal/gemfire/Pivotal_GemFire_810/lib/locator-dependencies.jar
 
@@ -418,12 +419,12 @@ Cluster configuration service is up and running.
 gfsh>start server --name=server1 --J=-Dgemfire.start-dev-rest-api=true --J=-Dgemfire.http-service-port=7676
 Starting a GemFire Server in /home/gpadmin/Desktop/server1...
 .............
-Server in /home/ec2-user/Desktop/server1 on ip-172-31-44-219.ec2.internal[40404] as server1 is currently online.
+Server in /home/gpadmin/Desktop/server1 on ip-172-31-44-219.ec2.internal[40404] as server1 is currently online.
 Process ID: 16646
 Uptime: 6 seconds
 GemFire Version: 8.1.0
 Java Version: 1.7.0_45
-Log File: /home/ec2-user/Desktop/server1/server1.log
+Log File: /home/gpadmin/Desktop/server1/server1.log
 JVM Arguments: -Dgemfire.default.locators=172.31.44.219[10334] -Dgemfire.use-cluster-configuration=true -Dgemfire.start-dev-rest-api=true -Dgemfire.http-service-port=7676 -XX:OnOutOfMemoryError=kill -KILL %p -Dgemfire.launcher.registerSignalHandlers=true -Djava.awt.headless=true -Dsun.rmi.dgc.server.gcInterval=9223372036854775806
 Class-Path: /opt/pivotal/gemfire/Pivotal_GemFire_810/lib/gemfire.jar:/opt/pivotal/gemfire/Pivotal_GemFire_810/lib/server-dependencies.jar
 ----
