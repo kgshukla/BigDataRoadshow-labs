@@ -10,9 +10,8 @@ Pre-Requisites
 - http://pivotal.io/big-data/pivotal-hd[PHD+Hawq] v3.0+  installed
 
 === Starting Pivotal Hadoop via Ambari
-You may want to skip this section as your instructor have already started Pivotal hadoop and other services for you. 
 
-If you want to learn how to do it your self, follow the instructions on this http://phd-start.cfapps.io/start_phd.pdf[website] to start Pivotal Hadoop.
+Follow the instructions on this link:start_phd.pdf[website] to start Pivotal Hadoop 3.0 via Ambari.
 
 Ask instructor for EC2 IPADDRESS.
 
