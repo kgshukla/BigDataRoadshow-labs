@@ -1,4 +1,4 @@
-=== Real Time Streaming demo using Pivotal Stack
+== Real Time Streaming demo using Pivotal Stack
 
 This demo aims to solve following problem that appeared in DEBS challenge 2015
 
@@ -10,6 +10,7 @@ Stream of taxi data comes in real time for new york region. Region is to be divi
 
 image::problemstmt.jpg[]
 
+----
 Question 1 - For every 10 seconds, find out the top 10 routes where taxies are plying the most from one area to another area.
 
 Question 2 - For every 10 seconds, find out the top 3 routes (areas) 
