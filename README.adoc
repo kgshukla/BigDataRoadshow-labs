@@ -6,6 +6,7 @@ So far this consists of:
 * link:labs/springxd[Data Streaming with Spring XD, GemFire and PHD]
 * link:labs/phd-hawq[PHD and Hawq Overview Lab]
 * link:labs/gemfire[GemFire Overview Lab (optional)]  
+* link:labs/realtime-stream-demo[Real Time Stream Demo using Pivotal Stack]
 
 == Environment
 
