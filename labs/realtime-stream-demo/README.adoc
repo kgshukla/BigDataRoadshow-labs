@@ -114,3 +114,141 @@ $curl -i http://localhost:8081/gemfire-api/v1
 you should see list of all regions in json format
 
 
+2. Start SpringXD
+
+Use following command to run SpringXD - Note: the command will not terminate.
+
+$ export JAVA_OPTS="-XX:PermSize=512m"
+
+$ $XD_HOME/bin/xd-singlenode
+
+You should wait and see following output and then proceed further
+
+[source,bash]
+----
+2015-08-18T04:09:23-0700 1.2.1.RELEASE INFO DeploymentsPathChildrenCache-0 container.DeploymentListener - Path cache event: type=INITIALIZED
+2015-08-18T04:09:23-0700 1.2.1.RELEASE INFO DeploymentSupervisor-0 zk.ContainerListener - Container arrived: Container{name='f6641b76-a6d0-4b46-956a-29c891140105', attributes={groups=, host=admin.local.com, id=f6641b76-a6d0-4b46-956a-29c891140105, ip=172.31.26.122, pid=148562}}
+2015-08-18T04:09:23-0700 1.2.1.RELEASE INFO DeploymentSupervisor-0 zk.ContainerListener - Scheduling deployments to new container(s) in 15000 ms 
+----
+
+Start another terminal and run springXD shell command where you will be creating streams
+
+$ $XD_SHELL/bin/xd-shell
+
+
+[source,bash]
+----
+[gpadmin@admin ~]$ $XD_SHELL/bin/xd-shell
+ _____                           __   _______
+/  ___|          (-)             \ \ / /  _  \
+\ `--. _ __  _ __ _ _ __   __ _   \ V /| | | |
+ `--. \ '_ \| '__| | '_ \ / _` |  / ^ \| | | |
+/\__/ / |_) | |  | | | | | (_| | / / \ \ |/ /
+\____/| .__/|_|  |_|_| |_|\__, | \/   \/___/
+      | |                  __/ |
+      |_|                 |___/
+eXtreme Data
+1.2.1.RELEASE | Admin Server Target: http://localhost:9393
+Welcome to the Spring XD shell. For assistance hit TAB or type "help".
+xd:>
+
+----
+
+Note - SpringXD Flo is also running on http://IPAddress:9393/admin-ui  where you could create streams using drag and drop. In this demo, we would be creating using command line interface.
+
+3. Start HTTPD
+
+Just in case httpd is not running, become root (passwd is changeme) and run "$service httpd start" command.
+
+
+4. Start Pivotal Hadoop 
+
+Login to http://IPAdress:8080 (user/passwd - admin/admin) and follow this guide to start PHD and HAWQ.
+
+
+5. Create Streams
+
+Go back to the XD Shell command line and run the following command -
+
+xd:>module list
+
+[source,bash]
+----
+xd:>module list
+      Source              Processor           Sink                     Job
+  ------------------  ------------------  -----------------------  -----------------
+      file                aggregator          aggregate-counter        filejdbc
+      ftp                 bridge              counter                  filepollhdfs
+      gemfire             filter              field-value-counter      ftphdfs
+      gemfire-cq          http-client         file                     gpload
+      http                json-to-tuple       ftp                      hdfsjdbc
+      jdbc                object-to-json      gauge                    hdfsmongodb
+      jms                 script              gemfire-json-server      jdbchdfs
+      kafka               scripts             gemfire-server           sparkapp
+      mail                shell               gpfdist                  sqoop
+      mongodb             splitter            hdfs                     timestampfile
+      mqtt                transform           hdfs-dataset
+      rabbit                                  jdbc
+      reactor-ip                              kafka
+      reactor-syslog                          log
+      sftp                                    mail
+      syslog-tcp                              mongodb
+      syslog-udp                              mqtt
+      tail                                    null
+      tcp                                     rabbit
+      tcp-client                              redis
+      time                                    rich-gauge
+      trigger                                 router
+      twittersearch                           shell
+      twitterstream                           spark-taxi
+                                              splunk
+                                              tcp
+                                              throughput-sampler
+----
+
+You will see that there is a module spark-taxi in Sink. This is nothing but a spark module which has been uploaded already in SpringXD. This spark module is written in java and contains the business logic of getting stream data. Stream data is collected over a window of 10 seconds and then business logic is applied to find out answers of Q1-Q5 and upload the data in Gemfire's region. The jar file is located at /var/www/html/streamtaxi/jar/spark-taxi-0.1.0.jar. 
+
+We will make the source code public soon.
+
+Create your first stream
+
+xd:>stream create --name stream-topx --definition "tcp --outputType=text/plain --decoder=LF | spark-taxi " --deploy
+
+This stream basically listens to all data coming to tcp default port and sending it to the spark module. When you run SpringXD in singlenode configuration, you could also have spark running inside SpringXD. In a real world scenario, Spark will be running separately.
+
+[source,bash]
+----
+xd:>stream create --name stream-topx --definition "tcp --outputType=text/plain --decoder=LF | spark-taxi " --deploy
+Created and deployed new stream 'stream-topx'
+xd:>
+----
+
+Make sure it is deployed correctly by checking that there are no errors in SpringXD single node terminal 
+
+6. Start taxi data on network port
+
+Run the following command to start streaming data on network port
+
+$cat /var/www/html/streamtaxi/sampledata/sorted_data.csv | nc localhost 1234
+
+Access your application at http://IPaddress/streamtaxi/index.html and see that the data is being shown on the website
+
+Note that there are three buttons, "Top 10 Areas(RT)", "Top 3 Routes(RT)" and "Free Taxies(RT)". Click on these button to see the streamed and processed data. 
+
+If you click on "Analytics on HD" button, you would not see any data because we are running sql queries on Hadoop via HAWQ. However, we have not created any stream that puts the data on hadoop. So in next section let's create a tap on existing stream and put the data on Hadoop.
+
+7. Create hdfs tap stream
+
+Run following command on XD shell
+
+xd:>stream create --name hdfsstream --definition "tap:stream:stream-topx > hdfs --directory=/xd/streamtaxi --fileExtension=csv --fileName=sorted_data --rollover=300M --idleTimeout=10" --deploy
+
+[source,bash]
+----
+xd:>stream create --name hdfsstream --definition "tap:stream:stream-topx > hdfs --directory=/xd/streamtaxi --fileExtension=csv --fileName=sorted_data --rollover=300M --idleTimeout=10" --deploy
+Created and deployed new stream 'hdfsstream'
+---- 
+
+This stream gets a duplicate from our earlier stream and puts it on HDFS.
+
+If you now click on the "Analytics on HD" button, you could see sql queries being run correctly and Google charts are properly shown.
