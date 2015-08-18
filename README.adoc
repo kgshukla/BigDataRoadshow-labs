@@ -1,21 +1,5 @@
 = Pivotal Big Data Roadshow  - Hands-on Technical Workshop
 
-Lab content for the Pivotal Big Data Roadshow (http://pivotal.io/big-data/data-roadshow).
-
-== Roadshow Agenda 
-
-The usual flow is the following:
-
-- 09:00 - 10:15: "The Journey to Becoming a Data-Driven Enterprise"
-- 10:15 - 10:30: Coffee Break
-- 10:30 - 12:00: Internet of Things Demo and Architecture Overview
-- 12:00 - 1:00:  Lunch & Birds of a Feather Discussion
-- 1:00  - 3:00:  Hands-On Technical Workshop
-
-This repository contains the material for the Hands-on Technical Workshop sessions
-
-== Contents
-
 So far this consists of:
 
 * this README
@@ -26,4 +10,6 @@ So far this consists of:
 == Environment
 
 The labs are built for running on any environment with the right products installed.  
-In order to make it simpler, we've created the Amazon AMI to launch instances quickly. Please ask your administrator for the .pem (mac users) or .ppk (windows users) file to login into the AMI
+In order to make it simpler, we've created the Amazon AMI to launch instances quickly. There is no .pem requirement to login in to the EC2 instance once AMI is launced.
+
+<TODO - AMI reference>
