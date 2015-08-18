@@ -11,7 +11,7 @@ Requirements
 
 If you have already completed SpringXD lab, then your PHD/HawQ is already running. Otherwise go to SpringXD lab and see the section on starting up PHD via Ambari. Proceed to next section.
 
-If you want to look at the status of PHD/HAWQ in Ambari, then login at http://IPADDRESS:8080  (user/passwd is admin/pivotal)
+If you want to look at the status of PHD/HAWQ in Ambari, then login at http://IPADDRESS:8080  (user/passwd is admin/admin)
 
 === Accessing Hadoop (HDFS)
 
