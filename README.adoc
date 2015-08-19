@@ -15,7 +15,7 @@ In order to make it simpler, we've created the Amazon AMI to launch instances qu
 
 Log in to your AWS account and search for AMI ID - ami-b4a7a9e6 (available in Singapore region). 
 
-- Launch it and make sure you choose m4.xlarge instance size. 
+- Launch it and make sure you choose m4.xlarge (16GB) instance size. Note: You could also try with t2.large (8GB) - we tried it and it works, however you may experience slowness.
 
 - Auto assign a public IP address
 
