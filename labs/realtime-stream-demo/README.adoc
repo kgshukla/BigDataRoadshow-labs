@@ -165,7 +165,12 @@ Just in case httpd is not running, become root (passwd is changeme) and run "$se
 
 Login to http://IPAdress:8080 (user/passwd - admin/admin) and follow this link:../springxd/start_phd.pdf[guide] to start PHD and HAWQ.
 
+Run following command on shell to delete all files (if present);
 
+[source,bash]
+----
+$hadoop fs -rm /xd/streamtaxi/*
+----
 * Create Streams
 
 Go back to the XD Shell command line and run the following command -
