@@ -10,10 +10,14 @@ So far this consists of:
 
 == Environment
 
-The labs are built for running on any environment with the right products installed.  
+The labs are built for running on any environment with the right products installed.
+
+There are two ways to get started. 
+
+1. Using Amazon Image  
 In order to make it simpler, we've created the Amazon AMI to launch instances quickly. There is no .pem requirement to login in to the EC2 instance once AMI is launced.
 
-Log in to your AWS account and search for AMI ID - ami-b4a7a9e6 (available in Singapore region). 
+Log in to your AWS account and search for AMI ID - "ami-b4a7a9e6" (available in Singapore region). 
 
 - Launch it and make sure you choose m4.xlarge (16GB) instance size. Note: You could also try with t2.large (8GB) - we tried it and it works, however you may experience slowness.
 
@@ -24,5 +28,11 @@ Log in to your AWS account and search for AMI ID - ami-b4a7a9e6 (available in Si
 - Keep all traffic open on all ports in your security group settings 
 
 - No need to choose a key pair.
+
+Once launched, you could ssh to machine using gpadmin/changeme credentials.
+
+
+2. Download .ova image
+You could download the .ova image link:https://drive.google.com/file/d/0B2Go1mVuppIRYWxILXNfb1VTQ3M/view[here] and start it off either on vmware fusion or virtualbox. Make sure you assign at least 8GB to the virtual machine. Once VM is started, make sure it is able to access google pages as our demo app uses Google Charts api to show maps.
 
 Once launched, you could ssh to machine using gpadmin/changeme credentials.
